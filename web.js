@@ -2,15 +2,15 @@ var express = require('express');
 
 var app = express.createServer(express.logger());
 
-var outfile = function(err, contents){
-    console.log(contents);
-}
-var ms= fs.readFile('index.html', outfile);
+var fs = require('fs');
 
 app.get('/', function(request, response) {
-
-
-  response.send(ms);
+    var indexContents = fs.readFile('index.html');
+  fs.readFile('index.html',
+               function(err, data) {
+		            if(err) throw err;
+                 response.send(data.toString());
+               });
 });
 
 var port = process.env.PORT || 5000;
